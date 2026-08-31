@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Klubben</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Rajdhani", sans-serif;
+            background: #0b0d10;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Background */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(rgba(11,13,16,.92), rgba(11,13,16,.97)),
+                url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1800&q=80");
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+            background-size: 45px 45px;
+            z-index: -1;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 72px;
+            background: rgba(8,10,13,.92);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            border-bottom: 1px solid #2b2f36;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: Orbitron;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #f5b942;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ddd;
+            font-size: 17px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        nav a:hover {
+            color: #f5b942;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 10% 40px;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .tag {
+            display: inline-block;
+            color: #f5b942;
+            border: 1px solid #f5b942;
+            padding: 6px 16px;
+            border-radius: 4px;
+            margin-bottom: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-family: Orbitron;
+            font-size: clamp(52px, 9vw, 110px);
+            line-height: .95;
+            margin-bottom: 22px;
+        }
+
+        h1 span {
+            color: #f5b942;
+        }
+
+        .hero p {
+            font-size: 21px;
+            color: #c9c9c9;
+            line-height: 1.5;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 14px 24px;
+            font-weight: 700;
+            border-radius: 5px;
+            transition: .25s;
+            font-size: 17px;
+        }
+
+        .primary {
+            background: #f5b942;
+            color: #111;
+        }
+
+        .primary:hover {
+            background: #ffd36d;
+            transform: translateY(-2px);
+        }
+
+        .secondary {
+            border: 1px solid #555;
+            color: white;
+        }
+
+        .secondary:hover {
+            border-color: #f5b942;
+            color: #f5b942;
+        }
+
+        section {
+            padding: 90px 10%;
+        }
+
+        .section-title {
+            font-family: Orbitron;
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .section-title span {
+            color: #f5b942;
+        }
+
+        .section-subtitle {
+            color: #aaa;
+            font-size: 18px;
+            margin-bottom: 45px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: rgba(20,23,29,.88);
+            border: 1px solid #2c3139;
+            border-radius: 10px;
+            padding: 28px;
+            transition: .25s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #f5b942;
+        }
+
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #f5b942;
+        }
+
+        .card p {
+            color: #c7c7c7;
+            line-height: 1.5;
+            font-size: 17px;
+        }
+
+        .tournament-box {
+            background: rgba(15,18,23,.92);
+            border: 1px solid #303640;
+            border-radius: 14px;
+            padding: 25px;
+            min-height: 300px;
+        }
+
+        .members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+            gap: 20px;
+        }
+
+        .member {
+            text-align: center;
+            background: rgba(20,23,29,.9);
+            border: 1px solid #2d333d;
+            border-radius: 10px;
+            padding: 22px;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: auto;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg,#f5b942,#9a6d12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #111;
+        }
+
+        .member h4 {
+            font-size: 20px;
+        }
+
+        .member span {
+            color: #999;
+        }
+
+        .join {
+            text-align: center;
+            background:
+                linear-gradient(rgba(18,20,25,.92),rgba(18,20,25,.96)),
+                url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1400&q=80");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .join h2 {
+            font-family: Orbitron;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .join p {
+            color: #ccc;
+            font-size: 19px;
+            margin-bottom: 25px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #777;
+            border-top: 1px solid #242830;
+            background: #090b0e;
+        }
+
+        @media(max-width:700px){
+
+            nav {
+                padding: 0 5%;
+            }
+
+            nav ul {
+                gap: 14px;
+            }
+
+            nav ul li:nth-child(2),
+            nav ul li:nth-child(3) {
+                display: none;
+            }
+
+            section {
+                padding: 70px 6%;
+            }
+
+            .hero {
+                padding-left: 6%;
+                padding-right: 6%;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">CS <span>KLUBBEN</span></div>
+
+    <ul>
+        <li><a href="#hem">Hem</a></li>
+        <li><a href="#om">Om oss</a></li>
+        <li><a href="#turneringar">Turneringar</a></li>
+        <li><a href="#medlemmar">Medlemmar</a></li>
+    </ul>
+</nav>
+
+
+<section class="hero" id="hem">
+
+    <div class="hero-content">
+
+        <div class="tag">Stockholm Science & Innovation School</div>
+
+        <h1>CS <span>KLUBBEN</span></h1>
+
+        <p>
+            En Counter-Strike klubb för elever på SSIS som vill spela matcher,
+            delta i turneringar och ha kul.
+        </p>
+
+        <div class="buttons">
+            <a class="btn primary" href="#turneringar">Se turneringar</a>
+            <a class="btn secondary" href="#om">Läs mer</a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="om">
+
+    <h2 class="section-title">Om <span>klubben</span></h2>
+
+    <p class="section-subtitle">
+        Vi samlar Counter-Strike spelare från hela skolan.
+    </p>
+
+    <div class="about-grid">
+
+        <div class="card">
+            <h3>Matcher</h3>
+            <p>
+                Spela organiserade matcher med andra medlemmar och förbättra ditt teamwork.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Turneringar</h3>
+            <p>
+                Delta i klubbens egna turneringar och kämpa om titeln som mästare.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Gemenskap</h3>
+            <p>
+                Träffa nya personer som delar samma intresse för Counter-Strike.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="turneringar">
+
+    <h2 class="section-title">Turneringar</h2>
+
+    <p class="section-subtitle">
+        Här hittar du aktuella och kommande turneringar i CS Klubben.
+    </p>
+
+    <div class="tournament-box">
+
+        <!-- CommonNinja Tournament Widget -->
+        <script src="https://cdn.commoninja.com/sdk/latest/commonninja.js" defer></script>
+        <div class="commonninja_component pid-d86fda86-725e-4883-b2b1-ca8b41f24f14"></div>
+
+    </div>
+
+</section>
+
+
+<section id="medlemmar">
+
+    <h2 class="section-title">Våran <span>ledning</span></h2>
+
+    <p class="section-subtitle">
+        Några av eleverna som representerar CS Klubben.
+    </p>
+
+    <div class="members">
+
+        <div class="member">
+            <div class="avatar">F</div>
+            <h4>Frank</h4>
+            <span>Ordförande</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="join">
+
+    <h2>Gå med i CS Klubben!</h2>
+
+    <a href="#hem" class="btn primary">Till toppen</a>
+
+</section>
+
+
+<footer>
+    CS Klubben · Stockholms Science & Innovation School
+</footer>
+
+</body>
+</html>
