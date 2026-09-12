@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ansluter till server...</title>
+    <meta charset="utf-8">
+    <script>
+        window.onload = function() {
+            // 1. Hämta parametrar från URL:en (t.ex. ?ip=chunkkeeper.com&port=27015)
+            const urlParams = new URLSearchParams(window.location.search);
+            const ip = urlParams.get('ip') || 'chunkkeeper.com'; // Standard-IP om inget anges
+            const port = urlParams.get('port') || '27015';       // Standard-port om inget anges
+
+            // 2. Bygg ihop Steam-länken dynamiskt
+            const steamLink = "steam://run/730//+connect " + ip + ":" + port;
+            
+            // 3. Visa för användaren vilken server de ansluter till
+            document.getElementById("server-info").innerText = ip + ":" + port;
+
+            // 4. Skicka användaren till Steam
+            window.location.href = steamLink;
+            
+            // 5. Försök stänga fliken efter 3 sekunder
+            setTimeout(function() { window.close(); }, 3000);
+        };
+    </script>
+</head>
+<body style="font-family: sans-serif; text-align: center; padding-top: 50px;">
+    <h2>Startar Counter-Strike 2...</h2>
+    <p>Ansluter till: <strong id="server-info">Laddar...</strong></p>
+    <p>Du kan stänga det här fönstret när spelet har startat.</p>
+</body>
+</html>
